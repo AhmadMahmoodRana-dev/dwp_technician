@@ -1,11 +1,28 @@
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "react-native";
+import { useEffect } from "react";
 
-export default function RootLayout() {
+const RootNavigation = () => {
+  const router = useRouter();
+  const isLogin = true;
+
+  useEffect(() => {
+    router.replace(isLogin ? "/(main)" : "/(auth)");
+  }, [isLogin]);
+
   return (
     <>
-      <StatusBar hidden={true} />
-      <Stack screenOptions={{ headerShown: false }} />;
+      <StatusBar hidden />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          gestureEnabled: true,
+          gestureDirection: "vertical",
+          animationMatchesGesture: true,
+        }}
+      />
     </>
   );
-}
+};
+
+export default RootNavigation;
