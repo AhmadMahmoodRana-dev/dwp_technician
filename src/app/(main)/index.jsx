@@ -1,48 +1,67 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
-import COLOR_SCHEME from '../../colors/MainStyle';
+import { StatusBar } from "expo-status-bar";
+import {StyleSheet,Text,View,TouchableOpacity,FlatList,Dimensions,ScrollView} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { MaterialIcons, Feather, Ionicons } from "@expo/vector-icons";
+import COLOR_SCHEME from "../../colors/MainStyle";
+import { useRouter } from "expo-router";
+import RecentJobCard from "../../components/RecentJobCard";
 
-const { width } = Dimensions.get('window');
-
+const { width } = Dimensions.get("window");
 
 const quickActions = [
-  { id: '1', icon: 'assignment', title: 'New Job' },
-  { id: '2', icon: 'schedule', title: 'Schedule' },
-  { id: '3', icon: 'inventory', title: 'Inventory' },
-  { id: '4', icon: 'report-problem', title: 'Issues' },
+  { id: "1", icon: "work", title: "Complaints", route: "/Complaint" },
+  { id: "2", icon: "summarize", title: "Summary" },
+  { id: "3", icon: "inventory", title: "Inventory" },
+  { id: "4", icon: "open-with", title: "OH Stock" },
 ];
 
 const recentJobs = [
-  { id: '1', title: 'AC Repair', location: 'Downtown Office', time: '2h ago', status: 'Completed' },
-  { id: '2', title: 'Server Maintenance', location: 'Data Center', time: '5h ago', status: 'In Progress' },
-  { id: '3', title: 'Network Setup', location: 'New Office', time: '1d ago', status: 'Pending' },
-  { id: '4', title: 'Network Setup', location: 'New Office', time: '1d ago', status: 'Pending' },
-  { id: '5', title: 'Network Setup', location: 'New Office', time: '1d ago', status: 'Pending' },
+  {
+    id: "1",
+    title: "AC Repair",
+    location: "Downtown Office",
+    time: "2h ago",
+    status: "Completed",
+  },
+  {
+    id: "2",
+    title: "Server Maintenance",
+    location: "Data Center",
+    time: "5h ago",
+    status: "In Progress",
+  },
+  {
+    id: "3",
+    title: "Network Setup",
+    location: "New Office",
+    time: "1d ago",
+    status: "Pending",
+  },
+  {
+    id: "4",
+    title: "Network Setup",
+    location: "New Office",
+    time: "1d ago",
+    status: "Pending",
+  },
+  {
+    id: "5",
+    title: "Network Setup",
+    location: "New Office",
+    time: "1d ago",
+    status: "Pending",
+  },
 ];
 
 export default function Index() {
+  const navigate = useRouter();
   const renderQuickAction = ({ item }) => (
-    <TouchableOpacity style={styles.quickActionItem}>
+    <TouchableOpacity
+      onPress={() => navigate.push(item?.route)}
+      style={styles.quickActionItem}
+    >
       <MaterialIcons name={item.icon} size={32} color={COLOR_SCHEME.accent} />
       <Text style={styles.quickActionText}>{item.title}</Text>
-    </TouchableOpacity>
-  );
-
-  const renderRecentJob = ({ item }) => (
-    <TouchableOpacity style={styles.jobCard}>
-      <View style={styles.jobHeader}>
-        <Text style={styles.jobTitle}>{item.title}</Text>
-        <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) }]}>
-          <Text style={styles.statusText}>{item.status}</Text>
-        </View>
-      </View>
-      <View style={styles.jobDetails}>
-        <Feather name="map-pin" size={16} color={COLOR_SCHEME.grayText} />
-        <Text style={styles.jobLocation}>{item.location}</Text>
-      </View>
-      <Text style={styles.jobTime}>{item.time}</Text>
     </TouchableOpacity>
   );
 
@@ -50,7 +69,6 @@ export default function Index() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
       <ScrollView showsVerticalScrollIndicator={false}>
-        
         {/* Header */}
         <View style={styles.header}>
           <View>
@@ -59,7 +77,11 @@ export default function Index() {
           </View>
           <View style={styles.headerIcons}>
             <TouchableOpacity style={styles.notificationBadge}>
-              <MaterialIcons name="notifications" size={24} color={COLOR_SCHEME.text} />
+              <MaterialIcons
+                name="notifications"
+                size={24}
+                color={COLOR_SCHEME.text}
+              />
               <View style={styles.badge} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.profileButton}>
@@ -83,7 +105,7 @@ export default function Index() {
         <Text style={styles.sectionTitle}>Recent Jobs</Text>
         <FlatList
           data={recentJobs}
-          renderItem={renderRecentJob}
+          renderItem={RecentJobCard}
           keyExtractor={(item) => item.id}
           scrollEnabled={false}
         />
@@ -94,11 +116,15 @@ export default function Index() {
         <TouchableOpacity>
           <MaterialIcons name="home" size={28} color={COLOR_SCHEME.accent} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate.push("/CalenderPage")}>
           <Feather name="calendar" size={28} color={COLOR_SCHEME.grayText} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Feather name="message-square" size={28} color={COLOR_SCHEME.grayText} />
+          <Feather
+            name="message-square"
+            size={28}
+            color={COLOR_SCHEME.grayText}
+          />
         </TouchableOpacity>
         <TouchableOpacity>
           <Feather name="settings" size={28} color={COLOR_SCHEME.grayText} />
@@ -108,15 +134,6 @@ export default function Index() {
   );
 }
 
-const getStatusColor = (status) => {
-  switch (status) {
-    case 'Completed': return '#4ECCA3';
-    case 'In Progress': return '#FFD700';
-    case 'Pending': return '#FF6B6B';
-    default: return COLOR_SCHEME.grayText;
-  }
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -124,9 +141,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 24,
   },
   greeting: {
@@ -136,18 +153,18 @@ const styles = StyleSheet.create({
   userName: {
     color: COLOR_SCHEME.text,
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   headerIcons: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 16,
   },
   notificationBadge: {
-    position: 'relative',
+    position: "relative",
   },
   badge: {
-    position: 'absolute',
+    position: "absolute",
     right: -4,
     top: -2,
     backgroundColor: COLOR_SCHEME.accent,
@@ -163,17 +180,17 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: COLOR_SCHEME.text,
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 16,
   },
-  
+
   quickActionsContainer: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   quickActionItem: {
     backgroundColor: COLOR_SCHEME.secondary,
-    width: (width / 2.3) - 24,
-    alignItems: 'center',
+    width: width / 2.3 - 24,
+    alignItems: "center",
     paddingVertical: 20,
     borderRadius: 10,
     margin: 8,
@@ -183,51 +200,10 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 16,
   },
-  jobCard: {
-    backgroundColor: COLOR_SCHEME.secondary,
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
-  },
-  jobHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  jobTitle: {
-    color: COLOR_SCHEME.text,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  statusBadge: {
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-  },
-  statusText: {
-    color: COLOR_SCHEME.text,
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  jobDetails: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 4,
-  },
-  jobLocation: {
-    color: COLOR_SCHEME.grayText,
-    fontSize: 14,
-  },
-  jobTime: {
-    color: COLOR_SCHEME.grayText,
-    fontSize: 12,
-  },
   navBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     backgroundColor: COLOR_SCHEME.primary,
     paddingVertical: 16,
     borderRadius: 24,
