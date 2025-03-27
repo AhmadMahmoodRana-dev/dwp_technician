@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import COLOR_SCHEME from "../colors/MainStyle";
 
 const RecentJobCard = ({ item }) => {
@@ -19,7 +19,14 @@ const RecentJobCard = ({ item }) => {
   return (
     <TouchableOpacity style={styles.jobCard}>
       <View style={styles.jobHeader}>
-        <Text style={styles.jobTitle}>{item.title}</Text>
+        <View style={styles.CardMain}>
+          <AntDesign name="file1" color="red" size={14} />
+          <Text style={styles.complaintNo}>
+            Complaint No :{" "}
+            <Text style={{ fontWeight: "100" }}>{item.complaintNo}</Text>
+          </Text>
+        </View>
+
         <View
           style={[
             styles.statusBadge,
@@ -29,11 +36,43 @@ const RecentJobCard = ({ item }) => {
           <Text style={styles.statusText}>{item.status}</Text>
         </View>
       </View>
-      <View style={styles.jobDetails}>
-        <Feather name="map-pin" size={16} color={COLOR_SCHEME.grayText} />
-        <Text style={styles.jobLocation}>{item.location}</Text>
+
+      <View style={styles.CardMain}>
+        <AntDesign name="calendar" color="red" size={14} />
+        <Text style={styles.complaintNo}>
+          Visit Date :{" "}
+          <Text style={{ fontWeight: "100" }}>{item.visitDate}</Text>
+        </Text>
       </View>
-      <Text style={styles.jobTime}>{item.region}</Text>
+      <View style={styles.CardMain}>
+        <Text style={styles.complaintNo}>
+          Day Since Complaint Filed :{" "}
+          <Text style={{ fontWeight: "100" }}>{item.complainedFiledDay}</Text>
+        </Text>
+      </View>
+      <View style={styles.CardMain}>
+        <Text style={styles.complaintNo}>
+          {item.product} |{" "}
+          <Text style={{ fontWeight: "100" }}>{item.productCode}</Text>
+        </Text>
+      </View>
+      {item.status === "Completed" ? (
+        <View style={styles.jobHeader}>
+          <Text style={{ fontWeight: 400, color: "white" }}>{item.region}</Text>
+        </View>
+      ) : (
+        <View style={styles.jobHeader}>
+          <Text style={{ fontWeight: 400, color: "white" }}>{item.region}</Text>
+          <TouchableOpacity onPress={() => console.log("i am arrived")}
+            style={[
+              styles.statusBadge,
+              { backgroundColor: getStatusColor(item.status) },
+            ]}
+          >
+            <Text style={styles.statusText}>Arrived</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
@@ -52,9 +91,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 8,
   },
-  jobTitle: {
+  complaintNo: {
     color: COLOR_SCHEME.text,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "600",
   },
   statusBadge: {
@@ -67,7 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "500",
   },
-  jobDetails: {
+  CardMain: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
