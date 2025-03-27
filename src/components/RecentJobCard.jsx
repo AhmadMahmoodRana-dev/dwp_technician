@@ -3,7 +3,7 @@ import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import COLOR_SCHEME from "../colors/MainStyle";
 
-const RecentJobCard = ({ item }) => {
+const RecentJobCard = ({ item,router }) => {
   const getStatusColor = (status) => {
     switch (status) {
       case "Completed":
@@ -16,8 +16,9 @@ const RecentJobCard = ({ item }) => {
         return COLOR_SCHEME.grayText;
     }
   };
+
   return (
-    <TouchableOpacity style={styles.jobCard}>
+    <TouchableOpacity style={styles.jobCard} onPress={() => router.push({ pathname: "ComplaintInformation", params: item })}>
       <View style={styles.jobHeader}>
         <View style={styles.CardMain}>
           <AntDesign name="file1" color="red" size={14} />
@@ -63,7 +64,8 @@ const RecentJobCard = ({ item }) => {
       ) : (
         <View style={styles.jobHeader}>
           <Text style={{ fontWeight: 400, color: "white" }}>{item.region}</Text>
-          <TouchableOpacity onPress={() => console.log("i am arrived")}
+          <TouchableOpacity
+            onPress={() => console.log("i am arrived")}
             style={[
               styles.statusBadge,
               { backgroundColor: getStatusColor(item.status) },

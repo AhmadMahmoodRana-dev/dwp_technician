@@ -147,7 +147,7 @@ const Complaint = () => {
       <View style={styles.cardContainer}>
         <FlatList
           data={filteredJobs}
-          renderItem={RecentJobCard}
+          renderItem={({ item }) => <RecentJobCard item={item} router={navigate} />}
           keyExtractor={(item) => item.id}
           scrollEnabled={true}
         />

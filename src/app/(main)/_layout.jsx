@@ -6,6 +6,7 @@ export default function MainLayout() {
       <Stack.Screen name="index" />
       <Stack.Screen name="CalendarPage" />
       <Stack.Screen name="Complaint" />
+      <Stack.Screen name="ComplaintInformation" />
     </Stack>
   );
 }

@@ -10,7 +10,7 @@ const { width } = Dimensions.get("window");
 
 const quickActions = [
   { id: "1", icon: "work", title: "Complaints", route: "/Complaint" },
-  { id: "2", icon: "summarize", title: "Summary" },
+  { id: "2", icon: "summarize", title: "Summary", route: "" },
   { id: "3", icon: "inventory", title: "Inventory" },
   { id: "4", icon: "open-with", title: "OH Stock" },
 ];
@@ -90,7 +90,7 @@ export default function Index() {
         <Text style={styles.sectionTitle}>Recent Jobs</Text>
         <FlatList
           data={recentJobs}
-          renderItem={RecentJobCard}
+          renderItem={({ item }) => <RecentJobCard item={item} router={navigate} />}
           keyExtractor={(item) => item.id}
           scrollEnabled={false}
         />
