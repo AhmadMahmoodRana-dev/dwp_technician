@@ -8,5 +8,3 @@ const COLOR_SCHEME = {
   };
 
   export default COLOR_SCHEME;
-
-// Usage:
