@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  StyleSheet,
-  Platform,
-} from "react-native";
+import {View,Text,TouchableOpacity,TextInput,StyleSheet,Platform, Linking} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLOR_SCHEME from "../../colors/MainStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,7 +8,7 @@ import Dropdown from "../../components/Dropdown";
 
 const ComplaintInformation = () => {
   const params = useLocalSearchParams();
-  const [phone, setPhone] = useState("03015988221");
+  const [phone, setPhone] = useState("3008878690");
   const [landline, setLandline] = useState("02135678900");
   const [address, setAddress] = useState("Test Address, City");
   const [phoneStatus, setPhoneStatus] = useState("working");
@@ -33,6 +26,12 @@ const ComplaintInformation = () => {
       default:
         return COLOR_SCHEME.grayText;
     }
+  };
+  const handleCall = () => {
+    const phoneNumber = `tel:+92${phone}"`; // Replace with actual number
+    Linking.openURL(phoneNumber).catch((err) =>
+      Alert.alert("Error", "Could not make a call")
+    );
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -84,11 +83,13 @@ const ComplaintInformation = () => {
         {/* Phone Number */}
         <View style={styles.inputGroup}>
           <Ionicons
+          onPress={() =>{handleCall()}}
             name="call"
             size={18}
             color={COLOR_SCHEME.grayText}
             style={styles.inputIcon}
           />
+          <Text style={{color:"white",fontSize:16}}>+92</Text>
           <TextInput
             style={styles.input}
             placeholder="Phone Number"
