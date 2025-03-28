@@ -69,7 +69,7 @@ export default function Index() {
               />
               <View style={styles.badge} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.profileButton}>
+            <TouchableOpacity style={styles.profileButton} onPress={() => navigate.push("/Profile")}>
               <Ionicons name="person" size={24} color={COLOR_SCHEME.text} />
             </TouchableOpacity>
           </View>
@@ -111,7 +111,7 @@ export default function Index() {
             color={COLOR_SCHEME.grayText}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate.push("/Setting")} >
           <Feather name="settings" size={28} color={COLOR_SCHEME.grayText} />
         </TouchableOpacity>
       </View>
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   quickActionItem: {
     backgroundColor: COLOR_SCHEME.secondary,
-    width: width / 2.3 - 24,
+    width: width * 0.35,
     alignItems: "center",
     paddingVertical: 20,
     borderRadius: 10,
