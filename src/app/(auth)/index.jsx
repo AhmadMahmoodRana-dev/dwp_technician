@@ -98,7 +98,7 @@ const Styles = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
-    tintColor: COLOR_SCHEME.accent,
+    // tintColor: COLOR_SCHEME.accent,
   },
   logoText: {
     color: COLOR_SCHEME.text,

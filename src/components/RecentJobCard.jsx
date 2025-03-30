@@ -3,7 +3,7 @@ import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import COLOR_SCHEME from "../colors/MainStyle";
 
-const RecentJobCard = ({ item,router }) => {
+const RecentJobCard = ({ item, router }) => {
   const getStatusColor = (status) => {
     switch (status) {
       case "Completed":
@@ -16,9 +16,26 @@ const RecentJobCard = ({ item,router }) => {
         return COLOR_SCHEME.grayText;
     }
   };
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case "High":
+        return "#ff3333";
+      case "Medium":
+        return "#e46f43";
+      case "Low":
+        return "#43e443";
+      default:
+        return COLOR_SCHEME.grayText;
+    }
+  };
 
   return (
-    <TouchableOpacity style={styles.jobCard} onPress={() => router.push({ pathname: "ComplaintInformation", params: item })}>
+    <TouchableOpacity
+      style={styles.jobCard}
+      onPress={() =>
+        router.push({ pathname: "ComplaintInformation", params: item })
+      }
+    >
       <View style={styles.jobHeader}>
         <View style={styles.CardMain}>
           <AntDesign name="file1" color="red" size={14} />
@@ -27,7 +44,6 @@ const RecentJobCard = ({ item,router }) => {
             <Text style={{ fontWeight: "100" }}>{item.complaintNo}</Text>
           </Text>
         </View>
-
         <View
           style={[
             styles.statusBadge,
@@ -37,22 +53,31 @@ const RecentJobCard = ({ item,router }) => {
           <Text style={styles.statusText}>{item.status}</Text>
         </View>
       </View>
-
-      <View style={styles.CardMain}>
-        <AntDesign name="calendar" color="red" size={14} />
-        <Text style={styles.complaintNo}>
-          Visit Date :{" "}
-          <Text style={{ fontWeight: "100" }}>{item.visitDate}</Text>
-        </Text>
+      <View style={styles.jobHeader}>
+        <View style={styles.CardMain}>
+          <AntDesign name="calendar" color="red" size={14} />
+          <Text style={styles.visitDate}>
+            Visit Date :{" "}
+            <Text style={{ fontWeight: "100" }}>{item.visitDate}</Text>
+          </Text>
+        </View>
+        <View
+          style={[
+            styles.statusBadge,
+            { backgroundColor: getPriorityColor(item.priority) },
+          ]}
+        >
+          <Text style={{color:"white",fontSize:10}}>{item.priority}</Text>
+        </View>
       </View>
       <View style={styles.CardMain}>
-        <Text style={styles.complaintNo}>
+        <Text style={styles.visitDate}>
           Day Since Complaint Filed :{" "}
           <Text style={{ fontWeight: "100" }}>{item.complainedFiledDay}</Text>
         </Text>
       </View>
       <View style={styles.CardMain}>
-        <Text style={styles.complaintNo}>
+        <Text style={styles.visitDate}>
           {item.product} |{" "}
           <Text style={{ fontWeight: "100" }}>{item.productCode}</Text>
         </Text>
@@ -95,7 +120,12 @@ const styles = StyleSheet.create({
   },
   complaintNo: {
     color: COLOR_SCHEME.text,
-    fontSize: 14,
+    fontSize: 15,
+    fontWeight: "600",
+  },
+  visitDate: {
+    color: COLOR_SCHEME.text,
+    fontSize: 13,
     fontWeight: "600",
   },
   statusBadge: {
@@ -105,7 +135,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     color: COLOR_SCHEME.text,
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "500",
   },
   CardMain: {

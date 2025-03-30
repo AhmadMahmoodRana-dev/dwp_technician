@@ -10,7 +10,7 @@ const Profile = () => {
   const [profileImage, setProfileImage] = useState(null);
 
   const technicianData = {
-    name: "John Carter",
+    name: "Ahmad Mahmood Rana",
     title: "Senior HVAC Technician",
     email: "john.carter@email.com",
     phone: "+1 (234) 567-890",

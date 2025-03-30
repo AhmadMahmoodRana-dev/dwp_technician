@@ -21,6 +21,7 @@ const Complaint = () => {
       productCode: "CX-40U560",
       status: "Completed",
       region: "North Region",
+      priority:"High"
     },
     {
       id: "2",
@@ -31,6 +32,8 @@ const Complaint = () => {
       productCode: "CX-40U560",
       status: "In Progress",
       region: "South Region",
+      priority:"Medium"
+
     },
     {
       id: "3",
@@ -41,6 +44,8 @@ const Complaint = () => {
       productCode: "CX-40U560",
       status: "Pending",
       region: "East Region",
+      priority:"Medium"
+
     },
     {
       id: "4",
@@ -51,6 +56,8 @@ const Complaint = () => {
       productCode: "CX-40U560",
       status: "Part Waiting",
       region: "West Region",
+      priority:"High"
+
     },
     {
       id: "5",
@@ -61,6 +68,8 @@ const Complaint = () => {
       productCode: "CX-40U560",
       status: "Under Repair",
       region: "Central Region",
+      priority:"Low"
+
     },
     {
       id: "6",
@@ -71,6 +80,8 @@ const Complaint = () => {
       productCode: "CX-40U560",
       status: "Under Repair",
       region: "Central Region",
+      priority:"High"
+
     },
     {
       id: "7",
@@ -81,6 +92,7 @@ const Complaint = () => {
       productCode: "CX-40U560",
       status: "Part Waiting",
       region: "Central Region",
+      priority:"Low"
     },
     {
       id: "8",
@@ -91,6 +103,7 @@ const Complaint = () => {
       productCode: "CX-40U560",
       status: "Completed",
       region: "Central Region",
+      priority:"Medium"
     },
   ];
 
@@ -172,6 +185,7 @@ const styles = StyleSheet.create({
     color: COLOR_SCHEME.text,
   },
   filterContainer: {
+    width:"100%",
     paddingVertical: 10,
     alignItems: "center",
     justifyContent: "center",
