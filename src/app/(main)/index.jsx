@@ -25,6 +25,7 @@ const recentJobs = [
     productCode: "CX-40U560",
     status: "Completed",
     region: "North Region",
+    priority: "High",
   },
   {
     id: "2",
@@ -35,6 +36,7 @@ const recentJobs = [
     productCode: "CX-40U560",
     status: "In Progress",
     region: "South Region",
+    priority: "Low",
   },
 ];
 
