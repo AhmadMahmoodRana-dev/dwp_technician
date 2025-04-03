@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {View,Text,TouchableOpacity,TextInput,StyleSheet,Platform, Linking} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import COLOR_SCHEME from "../../colors/MainStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -28,7 +28,7 @@ const ComplaintInformation = () => {
     }
   };
   const handleCall = () => {
-    const phoneNumber = `tel:+92${phone}"`; // Replace with actual number
+    const phoneNumber = `tel:+92${phone}"`; 
     Linking.openURL(phoneNumber).catch((err) =>
       Alert.alert("Error", "Could not make a call")
     );
@@ -39,6 +39,10 @@ const ComplaintInformation = () => {
         <Ionicons name="arrow-back" size={24} color={COLOR_SCHEME.text} />
         <Text style={styles.header}>Complaint Information</Text>
       </TouchableOpacity>
+      <View  style={{paddingVertical:12, paddingHorizontal:4,alignItems:"flex-end"}}>
+      <FontAwesome name="history" size={25} color={"white"}/>
+      </View>
+
 
       {/* Complaint Details Card */}
       <View style={styles.card}>
@@ -52,7 +56,7 @@ const ComplaintInformation = () => {
       </View>
 
       {/* Arrival Button */}
-      <TouchableOpacity style={[styles.arrivalButton,{backgroundColor:getStatusColor(params.status)}]}>
+      <TouchableOpacity onPress={() => router.push("ComplaintActivityForm")} style={[styles.arrivalButton,{backgroundColor:getStatusColor(params.status)}]}>
         <Ionicons
           name="navigate"
           size={20}
@@ -167,7 +171,6 @@ const ComplaintInformation = () => {
 };
 
 const styles = StyleSheet.create({
-  // ... keep all previous styles from earlier version ...
   container: {
     flex: 1,
     backgroundColor: COLOR_SCHEME.background,
