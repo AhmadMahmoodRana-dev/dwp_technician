@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Dropdown from "../../components/Dropdown";
 
-const ComplaintInformation = () => {
+const ContactedNumber = () => {
   const params = useLocalSearchParams();
   const [phone, setPhone] = useState("3008878690");
   const [landline, setLandline] = useState("02135678900");
@@ -37,7 +37,7 @@ const ComplaintInformation = () => {
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
         <Ionicons name="arrow-back" size={24} color={COLOR_SCHEME.text} />
-        <Text style={styles.header}>Complaint Information</Text>
+        <Text style={styles.header}>Contacted Number</Text>
       </TouchableOpacity>
       <View  style={{paddingVertical:12, paddingHorizontal:4,alignItems:"flex-end"}}>
       <FontAwesome name="history" size={25} color={"white"}/>
@@ -292,4 +292,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ComplaintInformation;
+export default ContactedNumber;

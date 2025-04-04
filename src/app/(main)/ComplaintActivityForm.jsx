@@ -1,5 +1,13 @@
-import React, { useState } from "react";
-import {View,Text,TouchableOpacity,TextInput,ScrollView,StyleSheet,Platform} from "react-native";
+import React, {useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLOR_SCHEME from "../../colors/MainStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -50,7 +58,6 @@ const ComplaintActivityForm = () => {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Editable Form Fields */}
         <View style={styles.formCard}>
           {/* Customer Name */}
           <View style={styles.inputGroup}>
@@ -140,7 +147,6 @@ const ComplaintActivityForm = () => {
             </TouchableOpacity>
           </View>
         </View>
-
         {/* Show DateTimePicker */}
         {showDatePicker && (
           <DateTimePicker
@@ -150,31 +156,6 @@ const ComplaintActivityForm = () => {
             onChange={onDateChange}
           />
         )}
-
-        {/* Action Buttons */}
-        {["Visits", "Technical Findings", "Store", "Advance"].map(
-          (item, index) => (
-            <View key={index} style={styles.rowBox}>
-              <Text style={styles.label}>{item}</Text>
-              <TouchableOpacity style={styles.addButton}>
-                <Text style={styles.buttonText}>+ Add New</Text>
-              </TouchableOpacity>
-            </View>
-          )
-        )}
-
-        {/* Warranty Document */}
-        <View style={styles.rowBox}>
-          <Text style={styles.label}>Warranty Document</Text>
-          <View style={styles.iconRow}>
-            <TouchableOpacity style={styles.iconButton}>
-              <Ionicons name="pencil" size={24} color={COLOR_SCHEME.accent} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton}>
-              <Ionicons name="camera" size={24} color={COLOR_SCHEME.accent} />
-            </TouchableOpacity>
-          </View>
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -290,13 +271,13 @@ const styles = StyleSheet.create({
   iconButton: {
     marginLeft: 10,
   },
-  label:{
+  label: {
     fontSize: 16,
     color: COLOR_SCHEME.text,
     fontWeight: "600",
     marginBottom: 5,
     paddingHorizontal: 10,
-  }
+  },
 });
 
 export default ComplaintActivityForm;

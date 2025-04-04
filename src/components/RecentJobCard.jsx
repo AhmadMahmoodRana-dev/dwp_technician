@@ -32,9 +32,7 @@ const RecentJobCard = ({ item, router }) => {
   return (
     <TouchableOpacity
       style={styles.jobCard}
-      onPress={() =>
-        router.push({ pathname: "ComplaintInformation", params: item })
-      }
+      onPress={() => router.push({ pathname: "ContactedNumber", params: item })}
     >
       <View style={styles.jobHeader}>
         <View style={styles.CardMain}>
@@ -67,7 +65,7 @@ const RecentJobCard = ({ item, router }) => {
             { backgroundColor: getPriorityColor(item.priority) },
           ]}
         >
-          <Text style={{color:"white",fontSize:10}}>{item.priority}</Text>
+          <Text style={{ color: "white", fontSize: 10 }}>{item.priority}</Text>
         </View>
       </View>
       <View style={styles.CardMain}>
