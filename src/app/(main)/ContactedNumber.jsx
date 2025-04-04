@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import {View,Text,TouchableOpacity,TextInput,StyleSheet,Platform, Linking} from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+  Linking,
+} from "react-native";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import COLOR_SCHEME from "../../colors/MainStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Dropdown from "../../components/Dropdown";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import CustomInput from "../../components/CustomInput";
 
 const ContactedNumber = () => {
   const params = useLocalSearchParams();
@@ -13,6 +22,10 @@ const ContactedNumber = () => {
   const [address, setAddress] = useState("Test Address, City");
   const [phoneStatus, setPhoneStatus] = useState("working");
   const [showStatusDropdown, setShowStatusDropdown] = useState(false);
+  const [visitDate, setVisitDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+
   const router = useRouter();
   const statusOptions = ["working", "not reachable", "wrong number"];
   const getStatusColor = (status) => {
@@ -28,10 +41,25 @@ const ContactedNumber = () => {
     }
   };
   const handleCall = () => {
-    const phoneNumber = `tel:+92${phone}"`; 
+    const phoneNumber = `tel:+92${phone}"`;
     Linking.openURL(phoneNumber).catch((err) =>
       Alert.alert("Error", "Could not make a call")
     );
+  };
+
+  const onChangeDate = (event, selectedDate) => {
+    if (selectedDate) {
+      setVisitDate(selectedDate);
+      setShowDatePicker(false);
+      setShowTimePicker(true);
+    }
+  };
+
+  const onChangeTime = (event, selectedTime) => {
+    if (selectedTime) {
+      setVisitDate(selectedTime);
+      setShowTimePicker(false);
+    }
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -39,10 +67,18 @@ const ContactedNumber = () => {
         <Ionicons name="arrow-back" size={24} color={COLOR_SCHEME.text} />
         <Text style={styles.header}>Contacted Number</Text>
       </TouchableOpacity>
-      <View  style={{paddingVertical:12, paddingHorizontal:4,alignItems:"flex-end"}}>
-      <FontAwesome name="history" size={25} color={"white"}/>
+      <View
+        style={{
+          paddingVertical: 12,
+          paddingHorizontal: 4,
+          alignItems: "flex-end",
+        }}
+      >
+        <Text style={{ color: "white", fontSize: 14, fontStyle: "italic" }}>
+          <Text>History </Text>{" "}
+          <FontAwesome name="history" size={14} color={"white"} />
+        </Text>
       </View>
-
 
       {/* Complaint Details Card */}
       <View style={styles.card}>
@@ -56,7 +92,13 @@ const ContactedNumber = () => {
       </View>
 
       {/* Arrival Button */}
-      <TouchableOpacity onPress={() => router.push("ComplaintActivityForm")} style={[styles.arrivalButton,{backgroundColor:getStatusColor(params.status)}]}>
+      <TouchableOpacity
+        onPress={() => router.push("ComplaintActivityForm")}
+        style={[
+          styles.arrivalButton,
+          { backgroundColor: getStatusColor(params.status) },
+        ]}
+      >
         <Ionicons
           name="navigate"
           size={20}
@@ -69,57 +111,27 @@ const ContactedNumber = () => {
       {/* Editable Form Section */}
       <View style={styles.formCard}>
         {/* Customer Name */}
-        <View style={styles.inputGroup}>
-          <Ionicons
-            name="person"
-            size={18}
-            color={COLOR_SCHEME.grayText}
-            style={styles.inputIcon}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Customer Name"
-            value="Test Entry"
-            editable={false}
-          />
-        </View>
-
-        {/* Phone Number */}
-        <View style={styles.inputGroup}>
-          <Ionicons
-          onPress={() =>{handleCall()}}
-            name="call"
-            size={18}
-            color={COLOR_SCHEME.grayText}
-            style={styles.inputIcon}
-          />
-          <Text style={{color:"white",fontSize:16}}>+92</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Phone Number"
-            value={phone}
-            onChangeText={setPhone}
-            keyboardType="phone-pad"
-          />
-        </View>
-
-        {/* Landline Number */}
-        <View style={styles.inputGroup}>
-          <Ionicons
-            name="phone-portrait"
-            size={18}
-            color={COLOR_SCHEME.grayText}
-            style={styles.inputIcon}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Landline"
-            value={landline}
-            onChangeText={setLandline}
-            keyboardType="phone-pad"
-          />
-        </View>
-
+        <CustomInput
+          icon={"person"}
+          placeholder={"Name"}
+          value={"Ahmad Mahmood Rana"}
+          editable={false}
+        />
+        {/* Phone No */}
+        <CustomInput
+          iconFunction={handleCall}
+          icon={"call"}
+          placeholder={"Phone No"}
+          value={phone}
+          onChangeText={setPhone}
+        />
+        {/*LandLine No */}
+        <CustomInput
+          icon={"phone-portrait"}
+          placeholder={"Landline No"}
+          value={landline}
+          onChangeText={setLandline}
+        />
         {/* Phone Status Dropdown */}
         <TouchableOpacity
           style={styles.inputGroup}
@@ -140,24 +152,53 @@ const ContactedNumber = () => {
             color={COLOR_SCHEME.grayText}
           />
         </TouchableOpacity>
-
         {/* Address */}
-        <View style={styles.inputGroup}>
+        <CustomInput
+          icon={"location"}
+          placeholder={"Address"}
+          value={address}
+          onChangeText={setAddress}
+        />
+        {/* Visit Date */}
+        <TouchableOpacity
+          style={styles.inputGroup}
+          onPress={() => setShowDatePicker(true)}
+        >
           <Ionicons
-            name="location"
+            name="calendar"
             size={18}
             color={COLOR_SCHEME.grayText}
             style={styles.inputIcon}
           />
-          <TextInput
-            style={[styles.input, styles.addressInput]}
-            placeholder="Address"
-            value={address}
-            onChangeText={setAddress}
-            multiline
-          />
-        </View>
+          <Text style={[styles.input, { paddingVertical: 12 }]}>
+            {visitDate ? visitDate.toLocaleString() : "Select Visit Date"}
+          </Text>
+        </TouchableOpacity>
       </View>
+      {/* VISIT DATE */}
+      {showDatePicker && (
+        <DateTimePicker
+          value={visitDate}
+          mode="date"
+          display="default"
+          onChange={onChangeDate}
+          minimumDate={new Date()} // Prevent selecting past dates
+        />
+      )}
+
+      {showTimePicker && (
+        <DateTimePicker
+          value={visitDate}
+          mode="time"
+          display="default"
+          onChange={onChangeTime}
+          minimumDate={
+            visitDate.toDateString() === new Date().toDateString()
+              ? new Date()
+              : undefined
+          }
+        />
+      )}
 
       {/* Custom Dropdown Modal */}
       <Dropdown
